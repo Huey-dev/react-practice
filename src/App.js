@@ -6,7 +6,7 @@ const localStorageKey = 'todoApp.todos'
 
 function App() {
   // every single todo in the todo state and the function we call to update those todos
-  const [todos, setTodos] = useState([])
+  const [todos, setTodosList] = useState([])
   const todoNameRef = useRef()
   
 
@@ -14,7 +14,7 @@ function App() {
     // LocalStorage converts to arrays, we use json.parse
     //  to convert to object. an array of objects
     const storedTodos = JSON.parse(localStorage.getItem(localStorageKey))
-    if (setTodos) setTodos(storedTodos)
+    if (setTodosList) setTodosList(storedTodos)
   }, [])
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function App() {
 function handleAddTodo(e){
   const name = todoNameRef.current.value
   if (name === '') return
-  setTodos(prevTodos => {
+  setTodosList(prevTodos => {
     return [...prevTodos, { id: uuidv4(), name: name, complete: false }]
   })
   todoNameRef.current.value = null
@@ -35,7 +35,7 @@ function handleAddTodo(e){
     <>
     {/* our todolist */}
     {/* set all the todos to a state to rerender with every change (useState hook) */}
-    <TodoList todos={todos} />
+    <TodoList TodoList={todos} />    {/* const todos*/}
     <input ref={todoNameRef} type="text" />
     <button onClick ={handleAddTodo} >Add Todo</button>
     <button>Clear</button>
